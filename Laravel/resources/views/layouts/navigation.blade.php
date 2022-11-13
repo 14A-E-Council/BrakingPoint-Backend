@@ -15,6 +15,8 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+
                 </div>
             </div>
 
@@ -37,6 +39,10 @@
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
+
+                            <x-dropdown-link :href="url('edit-profile')" :active="request()->routeIs('edit-profile')">
+                                {{ __('Edit profile') }}
+                            </x-dropdown-link>
 
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
@@ -73,10 +79,10 @@
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->username }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-                
+
             </div>
 
-           
+
 
             <div class="mt-3 space-y-1">
                 <!-- Authentication -->
@@ -86,7 +92,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}, 
+                        {{ __('Log Out') }},
                     </x-responsive-nav-link>
                 </form>
             </div>
