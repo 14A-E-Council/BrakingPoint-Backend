@@ -17,14 +17,26 @@
                     @foreach ($users as $user)
                     @method('PUT')
                     <div>
+                        <x-input-label for="username" :value="__('Username')" />
+
+                        <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="$user->username"  autofocus />
+                    </div>
+
+                    <div>
                         <x-input-label for="firstName" :value="__('First Name')" />
 
-                        <x-text-input id="firstName" class="block mt-1 w-full" type="text" name="firstName" :value="$user->firstName"  autofocus />
+                        <x-text-input id="firstName" class="block mt-1 w-full" type="text" name="firstName" :value="$user->firstName"/>
                     </div>
                     <div>
                         <x-input-label for="lastName" :value="__('Last Name')" />
 
-                        <x-text-input id="lastName" class="block mt-1 w-full" type="text" name="lastName" :value="$user->lastName" autofocus />
+                        <x-text-input id="lastName" class="block mt-1 w-full" type="text" name="lastName" :value="$user->lastName"/>
+                    </div>
+
+                    <div>
+                        <x-input-label for="email" :value="__('E-mail')" />
+
+                        <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="$user->email"/>
                     </div>
 
                     <div>

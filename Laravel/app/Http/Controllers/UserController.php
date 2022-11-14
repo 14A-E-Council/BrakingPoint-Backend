@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 
+
 class UserController extends Controller
 {
 
@@ -23,7 +24,29 @@ class UserController extends Controller
     public function edit(UserRequest $request) {
         $data = $request->validated();
         $id = Auth::id();
-        User::where('userID',$id)->update(['firstName'=> $data['firstName'], 'lastName'=>$data['lastName']]);
+        $fields = ['username','firstName','lastName','email'];
+
+        if (User::where('userID', $id)->get('username') != $data['username'] && 
+            User::where('username', '=', $data['username'])
+                ->where('userID','!=', $id)
+                ->exists()) {
+            return redirect('/edit-profile')->with('message', 'Username has already been taken!');
+        }
+
+        
+        if (User::where('userID', $id)->get('email') != $data['email'] && 
+            User::where('email', '=', $data['email'])
+                ->where('userID','!=', $id)
+                ->exists()) {
+            return redirect('/edit-profile')->with('message', 'Email has already been taken!');
+        }
+
+        foreach ($fields as $key => $value) {
+            
+            User::where('userID',$id)->update([$value => $data[$value]]);
+            
+        }
+        
         return redirect('/edit-profile')->with('message', 'Profile updated successfully');
     }
 
