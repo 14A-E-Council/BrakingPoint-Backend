@@ -25,9 +25,12 @@ class UserRequest extends FormRequest
     {
         return [
             'username' => 'max:255|required',
-            'firstName' => 'max:255',
-            'lastName' => 'max:255',
-            'email' => 'max:255|required|email'
+            'first_name' => 'max:255',
+            'last_name' => 'max:255',
+            'email' => 'max:255|required|email',
+            'profile_picture' => 'max:255',
+            'picture_frame' => 'max:255',
+            'xp' => '',
         ];
     }
 }
