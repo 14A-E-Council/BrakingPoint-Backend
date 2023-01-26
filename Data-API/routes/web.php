@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\competitorsController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\competitorsTestController;
+use Illuminate\Support\Facades\Facade\Http;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,4 +19,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/store-data',[competitorsTestController::class,'store']);
+Route::get('/store-data', [competitorsController::class, 'store']);
