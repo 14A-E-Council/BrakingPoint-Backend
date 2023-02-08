@@ -14,13 +14,20 @@ return new class extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->id('userID');
+            $table->string('username');
+            $table->string('last_name');
+            $table->string('first_name');
+            $table->string('email');
             $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->integer('balance');
+            $table->timestamp('registration_date');
+            $table->string('preferred_category');
+            $table->integer('level');
+            $table->string('picture_frame');
+            $table->integer('rank');
+            $table->string('colour_palette');
+            $table->string('profile_picture');
         });
     }
 
