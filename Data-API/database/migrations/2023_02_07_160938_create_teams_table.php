@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
+
         Schema::create('teams', function (Blueprint $table) {
             $table->id('teamID');
             $table->string('name');
-            $table->string('description');
-            $table->unsignedBigInteger('sportID');
-            $table->foreign('sportID')->references('sportID')->on('sports');
+            $table->text('description');
+            $table->timestamps(true);
         });
     }
 

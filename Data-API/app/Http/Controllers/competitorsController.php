@@ -8,45 +8,50 @@ use Illuminate\Support\Facades\Http;
 
 class competitorsController extends Controller
 {
-
     public function getDataFrom($url)
     {
         $response = Http::get($url);
 
         return json_decode($response->body());
     }
+
     public function store()
     {
-        foreach ($this->getDataFrom('http://ergast.com/api/f1/current/drivers.json') as $Competitors) {
-            $drivers = (((array) ((array) $Competitors)['DriverTable'])['Drivers']);
-            foreach ($drivers as $key => $value) {
-                $url = 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&continue=&format=json&formatversion=2';
-                $fullName = ($value->givenName . " " . $value->familyName);
-                $description = $this->getDataFrom($url . '&titles=' . substr($value->url, 29))->query->pages[0]->extract;
+        $results = $this->getDataFrom('http://ergast.com/api/f1/current/last/results.json')->MRData->RaceTable->Races[0]->Results;
 
-                competitorsModel::updateOrCreate(
-                    [
-                        'name' => $fullName,
-                        'description' => $description == "" ? "No description was found." : $description,
-                        'teamId' => ""
-                    ]
-                );
-            }
+
+        foreach ($results as $key => $value) {
+            $url = 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&continue=&format=json&formatversion=2';
+            $description = $this->getDataFrom($url . '&titles=' . substr($value->Constructor->url, 29))->query->pages[0]->extract;
+
+            teamsModel::updateOrCreate(
+                [
+                    'name' => $value->Constructor->name,
+                    'description' => $description == "" ? "No description was found." : $description
+
+                ]
+            );
         }
-        foreach ($this->getDataFrom('http://ergast.com/api/f1/current/constructors.json') as $Teams) {
-            $constructors = (((array) ((array) $Competitors)['DriverTable'])['Drivers']);
-            foreach ($constructors as $key => $value) {
-                $url = 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&continue=&format=json&formatversion=2';
-                $description = $this->getDataFrom($url . '&titles=' . substr($value->url, 29))->query->pages[0]->extract;
+        // return;
 
-                teamsModel::updateOrCreate(
-                    [
-                        'name' => $value->name,
-                        'description' => $description == "" ? "No description was found." : $description,
-                        'sportId' => "1"
-                    ]
-                );
-            }
+        foreach ($results as $key => $value) {
+            $url = 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&continue=&format=json&formatversion=2';
+            $fullName = ($value->Driver->givenName . " " . $value->Driver->familyName);
+            $description = $this->getDataFrom($url . '&titles=' . substr($value->Driver->url, 29))->query->pages[0]->extract;
+
+            $teamName = $value->Constructor->name;
+
+            // dd(teamsModel::where('name', 'LIKE', $teamName)->get()[0]->teamID);
+
+            competitorsModel::updateOrCreate(
+                [
+                    'name' => $fullName,
+                    'description' => $description == "" ? "No description was found." : $description,
+                    'teamID' => teamsModel::where('name', 'LIKE', $teamName)->get()[0]->teamID
+                ]
+            );
+
+            // dd($newCompetitor);
         }
     }
 }

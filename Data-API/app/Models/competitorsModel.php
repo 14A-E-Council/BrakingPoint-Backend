@@ -9,8 +9,8 @@ class competitorsModel extends Model
 {
     use HasFactory;
     protected $table = 'competitors';
-    protected $primaryKey = 'ID';
-    public $timestamps = false;
+    protected $primaryKey = 'competitorID';
+    public $timestamps = true;
 
     protected $fillable = [
         'driverId',
@@ -22,6 +22,7 @@ class competitorsModel extends Model
         'dateOfBirth',
         'nationality',
         'name',
-        'description'
+        'description',
+        'teamID'
     ];
 }

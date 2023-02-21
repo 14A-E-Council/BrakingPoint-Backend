@@ -10,7 +10,8 @@ class teamsModel extends Model
     use HasFactory;
     protected $table = 'teams';
     protected $primaryKey = 'teamID';
-    public $timestamps = 'false';
+    public $incrementing = 'false';
+    public $timestamps = true;
 
     protected $fillable = [
         'constructorId',
