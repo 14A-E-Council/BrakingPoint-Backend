@@ -31,6 +31,7 @@ class UserRequest extends FormRequest
             'profile_picture' => 'max:255',
             'picture_frame' => 'max:255',
             'xp' => '',
+            'admin' => '',
         ];
     }
 }

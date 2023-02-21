@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +25,12 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::controller(App\Http\Controllers\UserController::class)->group(function () {
+Route::controller(UserController::class)->group(function () {
     Route::get('/edit-profile', 'get');
     Route::put('/edit-profile', 'edit');
+});
+
+Route::controller(AdminController::class)->group(function (){
+    Route::get('/test', 'showAllUsers');
+    Route::put('/test', 'modifyUser');
 });

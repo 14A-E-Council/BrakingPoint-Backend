@@ -28,6 +28,7 @@ class User extends Authenticatable
         'profile_picture',
         'picture_frame',
         'xp',
+        'admin',
     ];
 
     /**
@@ -50,5 +51,5 @@ class User extends Authenticatable
     ];
 
 
-    
+
 }

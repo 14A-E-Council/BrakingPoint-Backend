@@ -48,8 +48,6 @@ class UserController extends Controller
 
         if($request->hasFile('profile_picture')) {
             $user = Auth::user();
-
-
             $profile_picture = $request->file('profile_picture');
             $filename = $user->username . '.' . $profile_picture->getClientOriginalExtension();
             Image::make($profile_picture)->resize(300, 300)->save(public_path('/uploads/profile_pictures/' .  $filename ));
@@ -120,6 +118,4 @@ class UserController extends Controller
         }
 
     }
-
-
 }
