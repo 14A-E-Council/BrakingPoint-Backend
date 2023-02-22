@@ -57,6 +57,7 @@ class UserController extends Controller
 
         }
 
+
         foreach ($fields as $key => $value) {
 
             User::where('userID',$id)->update([$value => $data[$value]]);
@@ -72,13 +73,13 @@ class UserController extends Controller
 	        FOR EACH ROW
                 BEGIN
                     IF NEW.level < 50 THEN
-                        SET NEW.picture_frame = '50.png';
+                        SET NEW.picture_frame = 'bronze.png';
 
                     ELSEIF NEW.level >= 50 && NEW.level < 125 THEN
-                        SET NEW.picture_frame = '125.png';
+                        SET NEW.picture_frame = 'silver.png';
 
                     ELSE
-                        SET NEW.picture_frame = '200.png';
+                        SET NEW.picture_frame = 'gold.png';
                     END IF;
                 END
 

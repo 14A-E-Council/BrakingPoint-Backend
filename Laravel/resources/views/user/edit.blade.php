@@ -17,13 +17,17 @@
                     @foreach ($users as $user)
                     @method('PUT')
                     <div>
-                        <img src="/uploads/profile_pictures/{{$user->profile_picture}}" style="width: 150px; height: 150px; border-radius:50%;"/>
+                        <div class="relative ">
+                            <img class="absolute" src="/uploads/profile_frames/{{$user->picture_frame}}" style="width: 200px; height: 200px; border-radius:50%; "/>
+                            <img class=" absolute top-6 left-6" src="/uploads/profile_pictures/{{$user->profile_picture}}" style="width: 150px; height: 150px; border-radius:50%;" class="w-full object-contain min-h-0"/>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="mt-60">
                         <label>Update profile picture </label>
                         <br>
                         <input type="file" name="profile_picture" id="profile_picture">
                         <input type="hidden" name="_token" value="{{ csrf_token() }} ">
-                    </div>
-                    <div>
                         <x-input-label for="username" :value="__('Username')" />
 
                         <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="$user->username"  autofocus />

@@ -1,9 +1,18 @@
 <x-app-layout>
 
     <x-slot name="header">
+        <div class="w-55 grid grid-cols-3 gap-4 content-start">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Admin page') }}
         </h2>
+        <form enctype="multipart/form-data" action="{{ url('admin')}}" method="GET">
+            @csrf
+            <x-search-input id="searchedTerm" class="block mt-1 w-full" type="text" name="searchedTerm" />
+            <x-primary-button class="ml-3">
+            {{ __('Search') }}
+            </x-primary-button>
+        </form>
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -26,7 +35,7 @@
                       <tbody>
                         @foreach ($users as $user)
                         <tr>
-                            <form enctype="multipart/form-data" action="{{ url('test')}}" method="POST">
+                            <form enctype="multipart/form-data" action="{{ url('admin')}}" method="POST">
                             @csrf
                             @method('PUT')
                             <th scope="row">

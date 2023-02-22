@@ -31,6 +31,6 @@ Route::controller(UserController::class)->group(function () {
 });
 
 Route::controller(AdminController::class)->group(function (){
-    Route::get('/test', 'showAllUsers');
-    Route::put('/test', 'modifyUser');
+    Route::get('/admin', 'showUsers');
+    Route::put('/admin', 'modifyUser');
 });

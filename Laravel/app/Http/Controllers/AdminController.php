@@ -12,10 +12,25 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller{
 
-    public function showAllUsers(){
+    public function search(Request $request)
+{
+        $searchedTerm = $request->searchedTerm;
+        $project = User::query();
+        if ($searchedTerm) {
+            $project->where('username', 'Like', '%' . $searchedTerm  . '%');
+        }
+        $users= $project->orderBy('userID', 'DESC')->paginate(10);
+        return $users->values();
+}
+
+    public function showUsers(Request $request){
         if($this->checkIfUserAdmin()){
-            $users = User::all();
-            return view('test', compact('users'));
+            if (!$request->searchedTerm)
+                $users = User::all();
+            else {
+                $users = $this->search($request);
+            }
+            return view('admin', compact('users'));
         }
         else
             return redirect('/dashboard')->with('message', 'You are not allowed to visit this page');
@@ -31,7 +46,7 @@ class AdminController extends Controller{
             User::where('username', '=', $data['username'])
                 ->where('userID','!=', $id)
                     ->exists()) {
-                return redirect('/test')->with('message', 'Username has already been taken!');
+                return redirect('/admin')->with('message', 'Username has already been taken!');
                 }
 
 
@@ -41,7 +56,7 @@ class AdminController extends Controller{
                 'last_name' => $request->last_name
             ]);
 
-            return redirect('/test')->with('message', "Profile updated successfuly");
+            return redirect('/admin')->with('message', "Profile updated successfuly");
         }
         else
             return redirect('/dashboard')->with('message', 'You are not allowed to visit this page');
