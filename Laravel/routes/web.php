@@ -1,8 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerification;
+use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\VerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +37,12 @@ Route::controller(AdminController::class)->group(function (){
     Route::get('/admin', 'showUsers');
     Route::put('/admin', 'modifyUser');
 });
+
+// EMAIL
+
+Route::controller(['middleware' => ['auth']], function() {
+    Route::get('/email/verify', 'VerificationController@show')->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify')->middleware(['signed']);
+    Route::post('/email/resend', 'VerificationController@resend')->name('verification.resend');
+});
+
