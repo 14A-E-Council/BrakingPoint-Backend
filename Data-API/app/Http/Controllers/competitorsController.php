@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\competitorsModel;
 use App\Models\teamsModel;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class competitorsController extends Controller
 {
@@ -23,11 +24,17 @@ class competitorsController extends Controller
         foreach ($results as $key => $value) {
             $url = 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&continue=&format=json&formatversion=2';
             $description = $this->getDataFrom($url . '&titles=' . substr($value->Constructor->url, 29))->query->pages[0]->extract;
+            $removeFromDescription = Str::between($description, '(',')');
+            $removeUnfinishedSentenceDesc = Str::afterLast($description, '.');
+            $description = Str::remove($removeFromDescription, $description);
+            $description = Str::remove($removeUnfinishedSentenceDesc, $description);
+            $description = Str::remove('()', $description);
+            $cleanDescription = Str::squish($description);
 
             teamsModel::updateOrCreate(
                 [
                     'name' => $value->Constructor->name,
-                    'description' => $description == "" ? "No description was found." : $description
+                    'description' => $cleanDescription == "" ? "No description was found." : $cleanDescription
 
                 ]
             );
@@ -38,6 +45,12 @@ class competitorsController extends Controller
             $url = 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&continue=&format=json&formatversion=2';
             $fullName = ($value->Driver->givenName . " " . $value->Driver->familyName);
             $description = $this->getDataFrom($url . '&titles=' . substr($value->Driver->url, 29))->query->pages[0]->extract;
+            $removeFromDescription = Str::between($description, '(',')');
+            $removeUnfinishedSentenceDesc = Str::afterLast($description, '.');
+            $description = Str::remove($removeFromDescription, $description);
+            $description = Str::remove($removeUnfinishedSentenceDesc, $description);
+            $description = Str::remove('()', $description);
+            $cleanDescription = Str::squish($description);
 
             $teamName = $value->Constructor->name;
 
@@ -46,7 +59,7 @@ class competitorsController extends Controller
             competitorsModel::updateOrCreate(
                 [
                     'name' => $fullName,
-                    'description' => $description == "" ? "No description was found." : $description,
+                    'description' => $cleanDescription == "" ? "No description was found." : $cleanDescription,
                     'teamID' => teamsModel::where('name', 'LIKE', $teamName)->get()[0]->teamID
                 ]
             );

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('competitors', function (Blueprint $table) {
             $table->id('competitorID');
             $table->string('name');
-            $table->text('description');
+            $table->longText('description');
             $table->foreignId('teamID')->references('teamID')->on('teams');
             $table->timestamps(true);
         });
