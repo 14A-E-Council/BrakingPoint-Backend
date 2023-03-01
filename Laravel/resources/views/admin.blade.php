@@ -55,9 +55,10 @@
                             </td>
 
                             <td>
-                                <x-primary-button class="ml-3">
-                                    {{ __('Save') }}
-                                </x-primary-button>
+                                <button type="submit" action="action" name="action" value="save">Save</button>
+                            </td>
+                            <td>
+                                <button type="submit" action="action" name="action" value="delete">Delete</button>
                             </td>
                         </form>
                         </tr>

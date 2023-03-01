@@ -36,31 +36,38 @@ class AdminController extends Controller{
             return redirect('/dashboard')->with('message', 'You are not allowed to visit this page');
     }
 
-    public function modifyUser(UserModifyRequest $request){
+    public function modifyOrDeleteUser(UserModifyRequest $request){
         if($this->checkIfUserAdmin()){
-            $data = $request->validated();
-            $id = $request->userID;
-            $field = ['username','first_name','last_name'];
+            if ($request->input('action') == 'save') {
+                $data = $request->validated();
+                $id = $request->userID;
+                $field = ['username','first_name','last_name'];
 
-            if (User::where('userID', $id)->get('username') != $data['username'] &&
-            User::where('username', '=', $data['username'])
-                ->where('userID','!=', $id)
-                    ->exists()) {
-                return redirect('/admin')->with('message', 'Username has already been taken!');
-                }
+                if (User::where('userID', $id)->get('username') != $data['username'] &&
+                User::where('username', '=', $data['username'])
+                    ->where('userID','!=', $id)
+                        ->exists()) {
+                    return redirect('/admin')->with('message', 'Username has already been taken!');
+                    }
 
 
-            User::where('userID', $id)->update([
-                'username' => $request->username,
-                'first_name' =>$request->first_name,
-                'last_name' => $request->last_name
-            ]);
+                User::where('userID', $id)->update([
+                    'username' => $request->username,
+                    'first_name' =>$request->first_name,
+                    'last_name' => $request->last_name
+                ]);
 
-            return redirect('/admin')->with('message', "Profile updated successfuly");
+                return redirect('/admin')->with('message', "Profile updated successfuly");
+            }
+            if($request->input('action') == 'delete') {
+                User::where('userID', $request->userID)->delete();
+                return redirect('/admin')->with('message', "Profile deleted successfuly");
+            }
         }
         else
             return redirect('/dashboard')->with('message', 'You are not allowed to visit this page');
     }
+
 
     private function checkIfUserAdmin() {
         $user = Auth::user();
