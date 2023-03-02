@@ -57,6 +57,15 @@
                             <td>
                                 <button type="submit" action="action" name="action" value="save">Save</button>
                             </td>
+                            @if ($user->banned_at == null)
+                            <td>
+                                <button type="submit" action="action" name="action" value="ban">Ban</button>
+                            </td>
+                            @else
+                            <td>
+                                <button type="submit" action="action" name="action" value="unban">Unban</button>
+                            </td>
+                            @endif
                             <td>
                                 <button type="submit" action="action" name="action" value="delete">Delete</button>
                             </td>

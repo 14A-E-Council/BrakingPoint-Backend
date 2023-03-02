@@ -40,6 +40,15 @@ Route::controller(UserController::class)->group(function () {
     Route::put('/edit-profile', 'edit');
 });
 
+//Ban user
+
+Route::group(['middleware'=>'is-ban'], function(){
+
+    Route::post('userBan',[AdminController::class,'modifyOrDeleteUser'])->name('users.ban');
+    Route::get('userUserRevoke/{id}',[UserController::class,'modifyOrDeleteUser'])->name('users.revokeuser');
+
+});
+
 
 //Admin
 Route::controller(AdminController::class)->group(function (){

@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ($table) {
-            $table->string('google_id')->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->timestamp('banned_at')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('google_id');
+            $table->dropColumn('banned_at');
         });
     }
 };

@@ -16,6 +16,7 @@ class UserController extends Controller
 {
     private static $xpConst = 500;
 
+
     public function get(){
         $id = Auth::id();
         $users = DB::table('users')->select('*')->where('userID', $id)->get();
@@ -100,6 +101,8 @@ class UserController extends Controller
 
         return redirect('/edit-profile')->with('message', 'Profile updated successfully');
     }
+
+
 
     public function giveUserXP($amount) {
         $user = Auth::user();

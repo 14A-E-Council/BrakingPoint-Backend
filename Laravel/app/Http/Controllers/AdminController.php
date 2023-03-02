@@ -57,17 +57,35 @@ class AdminController extends Controller{
                     'last_name' => $request->last_name
                 ]);
 
-                return redirect('/admin')->with('message', "Profile updated successfuly");
+                return redirect('/admin')->with('message', "Profile updated successfully");
             }
+
             if($request->input('action') == 'delete') {
                 User::where('userID', $request->userID)->delete();
-                return redirect('/admin')->with('message', "Profile deleted successfuly");
+                return redirect('/admin')->with('message', "Profile deleted successfully");
+            }
+
+            // Ban and unban user
+            if($request->input('action') == 'ban') {
+                $input = $request->all();
+                $user = User::find($input['userID']);
+                $user->bans()->create([
+                    'expired_at' => '+1 month',
+                    'comment'=> 'You have benn banned',
+                ]);
+                return redirect('/admin')->with('message', "Profile was banned successfully");
+            }
+
+            if($request->input('action') == 'unban'){
+                $input = $request->all();
+                $user = User::find($input['userID']);
+                $user->unban();
+                return redirect('/admin')->with('message', "Profile was unbanned successfully");
             }
         }
         else
             return redirect('/dashboard')->with('message', 'You are not allowed to visit this page');
     }
-
 
     private function checkIfUserAdmin() {
         $user = Auth::user();
