@@ -9,6 +9,8 @@ use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Image;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Hash;
 
 
 
@@ -17,6 +19,15 @@ class UserController extends Controller
     private static $xpConst = 500;
 
 
+     /**
+     * Handle an incoming registration request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+
     public function get(){
         $id = Auth::id();
         $users = DB::table('users')->select('*')->where('userID', $id)->get();
@@ -24,48 +35,57 @@ class UserController extends Controller
     }
 
     public function edit(UserRequest $request) {
-        $data = $request->validated();
-        $id = Auth::id();
-        $fields = ['username','first_name','last_name','email'];
+        try {
+            $data = $request->validated();
+            // TODO
+            // $id = Auth::id();
+            $id = $request->id;
+            $fields = ['username','first_name','last_name','email'];
 
-        if (User::where('userID', $id)->get('username') != $data['username'] &&
-            User::where('username', '=', $data['username'])
-                ->where('userID','!=', $id)
-                ->exists()) {
-            return redirect('/edit-profile')->with('message', 'Username has already been taken!');
-        }
-
-
-        if (User::where('userID', $id)->get('email') != $data['email'] &&
-            User::where('email', '=', $data['email'])
-                ->where('userID','!=', $id)
-                ->exists()) {
-            return redirect('/edit-profile')->with('message', 'Email has already been taken!');
-        }
+            if (User::where('userID', $id)->get('username') != $data['username'] &&
+                User::where('username', '=', $data['username'])
+                    ->where('userID','!=', $id)
+                    ->exists()) {
+                return response()->json(['error' => 'Username has already been taken!'], 409);
+            }
 
 
+            if (User::where('userID', $id)->get('email') != $data['email'] &&
+                User::where('email', '=', $data['email'])
+                    ->where('userID','!=', $id)
+                    ->exists()) {
+                return response()->json(['error' => 'Email has already been taken!'], 409);
+            }
 
 
 
-        if($request->hasFile('profile_picture')) {
-            $user = Auth::user();
-            $profile_picture = $request->file('profile_picture');
-            $filename = $user->username . '.' . $profile_picture->getClientOriginalExtension();
-            Image::make($profile_picture)->resize(300, 300)->save(public_path('/uploads/profile_pictures/' .  $filename ));
-
-            $user->profile_picture = $filename;
-            $user->save();
-
-        }
 
 
-        foreach ($fields as $key => $value) {
+            if($request->hasFile('profile_picture')) {
+                $user = Auth::user();
+                $profile_picture = $request->file('profile_picture');
+                $filename = $user->username . '.' . $profile_picture->getClientOriginalExtension();
+                Image::make($profile_picture)->resize(300, 300)->save(public_path('/uploads/profile_pictures/' .  $filename ));
 
-            User::where('userID',$id)->update([$value => $data[$value]]);
+                $user->profile_picture = $filename;
+                $user->save();
 
-        }
+            }
 
 
+            foreach ($fields as $key => $value) {
+
+                User::where('userID',$id)->update([$value => $data[$value]]);
+
+            }
+            return response()->json([
+                'message' => 'Profile updated successfully',
+                'user' => $user
+            ]);
+
+        } catch (\Exception $e) {
+        return response()->json(['error' => 'Update failed!'], 400);
+    }
 
         /*Picture frame changer according to level
         CREATE DEFINER=`root`@`localhost` TRIGGER brakingpoint.ChangePictureFrame
@@ -97,9 +117,6 @@ class UserController extends Controller
 	        DEFINER = 'root'@'localhost'
             EVENT brakingpoint.UpBalanceEveryWeek
 	    ENABLE*/
-
-
-        return redirect('/edit-profile')->with('message', 'Profile updated successfully');
     }
 
 

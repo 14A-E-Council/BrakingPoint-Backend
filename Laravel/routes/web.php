@@ -57,11 +57,11 @@ Route::controller(AdminController::class)->group(function (){
 });
 
 // EMAIL
-Route::controller(['middleware' => ['auth']], function() {
-    Route::get('/email/verify', 'VerificationController@show')->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify')->middleware(['signed']);
-    Route::post('/email/resend', 'VerificationController@resend')->name('verification.resend');
-});
+// Route::controller(['middleware' => ['auth']], function() {
+//     Route::get('/email/verify', 'VerificationController@show')->name('verification.notice');
+//     Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify')->middleware(['signed']);
+//     Route::post('/email/resend', 'VerificationController@resend')->name('verification.resend');
+// });
 
 //Google login
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
@@ -128,3 +128,7 @@ Route::post('/reset-password', function (Request $request) {
                 ? redirect()->route('login')->with('status', __($status))
                 : back()->withErrors(['email' => [__($status)]]);
 })->middleware('guest')->name('password.update');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
