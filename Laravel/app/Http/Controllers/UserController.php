@@ -34,12 +34,11 @@ class UserController extends Controller
         return view('user.edit', ['users'=>$users]);
     }
 
-    public function edit(UserRequest $request) {
+    public function edit(UserRequest $request, $id) {
         try {
             $data = $request->validated();
             // TODO
             // $id = Auth::id();
-            $id = $request->id;
             $fields = ['username','first_name','last_name','email'];
 
             if (User::where('userID', $id)->get('username') != $data['username'] &&
@@ -78,6 +77,7 @@ class UserController extends Controller
                 User::where('userID',$id)->update([$value => $data[$value]]);
 
             }
+            $user->save();
             return response()->json([
                 'message' => 'Profile updated successfully',
                 'user' => $user

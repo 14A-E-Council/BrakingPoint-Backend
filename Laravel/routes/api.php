@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::controller(UserController::class)->group(function () {
-    Route::put('/editprofile', 'edit');
+    Route::put('/editprofile/{id}', 'edit');
 });
 
 
