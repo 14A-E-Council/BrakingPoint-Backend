@@ -25,9 +25,9 @@ class competitorsController extends Controller
             $url = 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&continue=&format=json&formatversion=2';
             $description = $this->getDataFrom($url . '&titles=' . substr($value->Constructor->url, 29))->query->pages[0]->extract;
             $removeFromDescription = Str::between($description, '(',')');
-            $removeUnfinishedSentenceDesc = Str::afterLast($description, '.');
-            $description = Str::remove($removeFromDescription, $description);
-            $description = Str::remove($removeUnfinishedSentenceDesc, $description);
+            $removeUnfinishedSentenceDesc = Str::afterLast($description, '.');          
+            $description = Str::remove($removeFromDescription, $description);           
+            $description = Str::remove($removeUnfinishedSentenceDesc, $description);            
             $description = Str::remove('()', $description);
             $cleanDescription = Str::squish($description);
 
@@ -43,18 +43,27 @@ class competitorsController extends Controller
 
         foreach ($results as $key => $value) {
             $url = 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&continue=&format=json&formatversion=2';
+
+            // Teljes név létrehozása
+
             $fullName = ($value->Driver->givenName . " " . $value->Driver->familyName);
+
+            // Leírás lekérése és tisztítása
             $description = $this->getDataFrom($url . '&titles=' . substr($value->Driver->url, 29))->query->pages[0]->extract;
+
             $removeFromDescription = Str::between($description, '(',')');
+
             $removeUnfinishedSentenceDesc = Str::afterLast($description, '.');
+
             $description = Str::remove($removeFromDescription, $description);
             $description = Str::remove($removeUnfinishedSentenceDesc, $description);
             $description = Str::remove('()', $description);
+
             $cleanDescription = Str::squish($description);
 
+            // Csapat név definiálása
             $teamName = $value->Constructor->name;
 
-            // dd(teamsModel::where('name', 'LIKE', $teamName)->get()[0]->teamID);
 
             competitorsModel::updateOrCreate(
                 [
@@ -64,7 +73,7 @@ class competitorsController extends Controller
                 ]
             );
 
-            // dd($newCompetitor);
+            
         }
     }
 }
