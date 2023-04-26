@@ -15,8 +15,13 @@ return new class extends Migration
     {
         Schema::create('competitors', function (Blueprint $table) {
             $table->id('competitorID');
+            $table->string('driverUrl');
             $table->string('name');
             $table->longText('description');
+            $table->integer('permanentNumber');
+            $table->string('nationality');
+            $table->date('dateOfBirth');
+            $table->float('points');
             $table->foreignId('teamID')->references('teamID')->on('teams');
             $table->timestamps(true);
         });

@@ -14,7 +14,7 @@ class teamsModel extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'constructorId',
+        'constructorUrl',
         'url',
         'name',
         'nationality',

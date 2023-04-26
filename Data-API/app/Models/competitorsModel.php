@@ -13,12 +13,8 @@ class competitorsModel extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'driverId',
+        'driverUrl',
         'permanentNumber',
-        'code',
-        'url',
-        'givenName',
-        'familyName',
         'dateOfBirth',
         'nationality',
         'name',

@@ -16,10 +16,10 @@ class competitorsController extends Controller
         return json_decode($response->body());
     }
 
-    public function store()
+    public function storeCompetitors()
     {
         $results = $this->getDataFrom('http://ergast.com/api/f1/current/last/results.json')->MRData->RaceTable->Races[0]->Results;
-
+        $competitorsInfo = $this->getDataFrom('http://ergast.com/api/f1/current/drivers.json')->MRData->DriverTable->Drivers;
 
         foreach ($results as $key => $value) {
             $url = 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&continue=&format=json&formatversion=2';
@@ -34,12 +34,11 @@ class competitorsController extends Controller
             teamsModel::updateOrCreate(
                 [
                     'name' => $value->Constructor->name,
+                    'constructorUrl' => $value->Constructor->constructorId,
                     'description' => $cleanDescription == "" ? "No description was found." : $cleanDescription
-
                 ]
             );
         }
-        // return;
 
         foreach ($results as $key => $value) {
             $url = 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&continue=&format=json&formatversion=2';
@@ -64,16 +63,33 @@ class competitorsController extends Controller
             // Csapat név definiálása
             $teamName = $value->Constructor->name;
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
             competitorsModel::updateOrCreate(
                 [
                     'name' => $fullName,
+                    'driverUrl' => $value->Driver->driverId,
                     'description' => $cleanDescription == "" ? "No description was found." : $cleanDescription,
                     'teamID' => teamsModel::where('name', 'LIKE', $teamName)->get()[0]->teamID
                 ]
             );
+        }
+        foreach ($competitorsInfo as $key => $value) {
 
+<<<<<<< Updated upstream
             
+=======
+
+            competitorsModel::updateOrCreate(
+                [
+                    'permanentNumber' =>,
+                    'dateOfBirth' =>,
+                    'nationality' =>
+                ]
+            );
+>>>>>>> Stashed changes
         }
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\competitorsController;
+use App\Http\Controllers\raceResultsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Facade\Http;
 
@@ -19,4 +20,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/store-data', [competitorsController::class, 'store']);
+Route::get('/storecompetitors', [competitorsController::class, 'storeCompetitors']);
+Route::get('/updatecompetitors', [competitorsController::class, 'updateCompetitors']);
+Route::get('/storelastrace', [raceResultsController::class, 'storeLastRace']);

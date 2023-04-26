@@ -13,17 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-
-        Schema::create('teams', function (Blueprint $table) {
-            $table->id('teamID');
-            $table->string('name');
-            $table->longText('description');
-            $table->string('teamUrl');
+        Schema::create('raceresults', function (Blueprint $table) {
+            $table->id('raceResultID');
+            $table->string('raceName');
             $table->integer('position');
-            $table->string('nationality');
             $table->float('points');
-            $table->foreignId('sportID')->references('sportID')->on('sports');
-            $table->timestamps(true);
+            $table->integer('fastestLap');
+            $table->string('time');
+            $table->integer('laps');
+            $table->foreignId('competitorID')->references('competitorID')->on('competitors');
+
         });
     }
 
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('teams');
+        Schema::dropIfExists('raceresults');
     }
 };
