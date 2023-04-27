@@ -38,9 +38,8 @@ class competitorsController extends Controller
             teamsModel::updateOrCreate(
                 [
                     'name' => $value->Constructor->name,
-                    'teamUrl' => $value->Constructor->teamId,
+                    'teamUrl' => $value->Constructor->constructorId,
                     'nationality' => $value->Constructor->nationality,
-                    'constructorUrl' => $value->Constructor->constructorId,
                     'description' => $cleanDescription == "" ? "No description was found." : $cleanDescription
                 ]
             );
@@ -71,7 +70,7 @@ class competitorsController extends Controller
                     'permanentNumber' =>$value->Driver->permanentNumber,
                     'nationality' => $value->Driver->nationality,
                     'description' => $cleanDescription == "" ? "No description was found." : $cleanDescription,
-                    'teamID' => teamsModel::where('teamUrl', 'LIKE', $value->Constructor->teamId)->get()[0]->teamID
+                    'teamID' => teamsModel::where('teamUrl', 'LIKE', $value->Constructor->constructorId)->get()[0]->teamID
                 ]
             );
         }
