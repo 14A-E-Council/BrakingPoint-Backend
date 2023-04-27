@@ -44,7 +44,7 @@ class UserController extends Controller
             $data = $request;//->validated();
             // TODO
             // $id = Auth::id();
-            $fields = ['username','first_name','last_name','email','profile_picture','preferred_category'];
+            $fields = ['username','first_name','last_name','email','profile_picture','preferred_category','colour_palette',];
 
             if (User::where('userID', $id)->get('username') != $data['username'] &&
                 User::where('username', '=', $data['username'])
