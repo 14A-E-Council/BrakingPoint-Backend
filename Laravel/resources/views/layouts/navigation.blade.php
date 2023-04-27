@@ -15,6 +15,8 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+
                 </div>
             </div>
 
@@ -23,7 +25,10 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div>{{ Auth::user()->username }}</div>
+                        <img src="/uploads/profile_pictures/{{Auth::user()->profile_picture}}" style="width: 32px; height: 32px; postition:absolute; top:10px; left:10px; border-radius:50%; margin-right:15px;"/>
+                            <div>
+                                {{ Auth::user()->username }}
+                            </div>
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -33,10 +38,15 @@
                         </button>
                     </x-slot>
                     <x-slot name="content">
+                    Level: {{Auth::user()->level}} <br>
                     Balance: {{Auth::user()->balance}}
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
+
+                            <x-dropdown-link :href="url('edit-profile')" :active="request()->routeIs('edit-profile')">
+                                {{ __('Edit profile') }}
+                            </x-dropdown-link>
 
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
@@ -73,10 +83,10 @@
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->username }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-                
+
             </div>
 
-           
+
 
             <div class="mt-3 space-y-1">
                 <!-- Authentication -->
@@ -86,7 +96,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}, 
+                        {{ __('Log Out') }},
                     </x-responsive-nav-link>
                 </form>
             </div>
