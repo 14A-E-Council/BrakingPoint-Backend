@@ -34,12 +34,16 @@ class UserController extends Controller
         return view('user.edit', ['users'=>$users]);
     }
 
+    public function showUsers(){
+            $users = User::all();
+            return response()->json($users);
+        }
+
     public function edit(UserRequest $request, $id) {
-        try {
             $data = $request->validated();
             // TODO
             // $id = Auth::id();
-            $fields = ['username','first_name','last_name','email'];
+            $fields = ['username','first_name','last_name','email','profile_picture'];
 
             if (User::where('userID', $id)->get('username') != $data['username'] &&
                 User::where('username', '=', $data['username'])
@@ -82,11 +86,6 @@ class UserController extends Controller
                 'message' => 'Profile updated successfully',
                 'user' => $user
             ]);
-
-        } catch (\Exception $e) {
-        return response()->json(['error' => 'Update failed!'], 400);
-    }
-
         /*Picture frame changer according to level
         CREATE DEFINER=`root`@`localhost` TRIGGER brakingpoint.ChangePictureFrame
 	        BEFORE UPDATE
@@ -99,8 +98,14 @@ class UserController extends Controller
                     ELSEIF NEW.level >= 50 && NEW.level < 125 THEN
                         SET NEW.picture_frame = 'silver.png';
 
-                    ELSE
+                    ELSEIF NEW.level >= 125 && NEW.level < 200 THEN
                         SET NEW.picture_frame = 'gold.png';
+
+                    ELSEIF NEW.level >= 200 && NEW.level < 300 THEN
+                        SET NEW.picture_frame = 'diamond.png';
+
+                    ELSE
+                        SET NEW.picture_frame = 'amethyst.png';
                     END IF;
                 END
 
@@ -120,6 +125,16 @@ class UserController extends Controller
     }
 
 
+    public function UserResource($request) {
+        return [
+            'userID' => $this->userID,
+            'username' => $this->username,
+            'email' => $this->email,
+            'level' => $this->level,
+            'picture_frame' => $this->picture_frame,
+            'profile_picture' => $this->profile_picture,
+        ];
+    }
 
     public function giveUserXP($amount) {
         $user = Auth::user();

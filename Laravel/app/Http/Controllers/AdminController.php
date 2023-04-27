@@ -33,7 +33,7 @@ class AdminController extends Controller{
             return view('admin', compact('users'));
         }
         else
-            return redirect('/dashboard')->with('message', 'You are not allowed to visit this page');
+            return response()->json(['error' => 'You are not allowed to view this page!'], 401);
     }
 
     public function modifyOrDeleteUser(UserModifyRequest $request){
@@ -47,7 +47,7 @@ class AdminController extends Controller{
                 User::where('username', '=', $data['username'])
                     ->where('userID','!=', $id)
                         ->exists()) {
-                    return redirect('/admin')->with('message', 'Username has already been taken!');
+                    return response()->json(['error' => 'Username has already been taken!'], 409);
                     }
 
 
@@ -57,12 +57,12 @@ class AdminController extends Controller{
                     'last_name' => $request->last_name
                 ]);
 
-                return redirect('/admin')->with('message', "Profile updated successfully");
+                return response()->json(['message' => 'Profile updated successfully'], 200);
             }
 
             if($request->input('action') == 'delete') {
                 User::where('userID', $request->userID)->delete();
-                return redirect('/admin')->with('message', "Profile deleted successfully");
+                return response()->json(['message' => 'Profile deleted successfully'], 200);
             }
 
             // Ban and unban user
@@ -73,18 +73,23 @@ class AdminController extends Controller{
                     'expired_at' => '+1 month',
                     'comment'=> 'You have benn banned',
                 ]);
-                return redirect('/admin')->with('message', "Profile was banned successfully");
+                return response()->json(['message' => 'Profile was banned successfully'], 200);
             }
+            else
+                return response()->json(['error' => 'User has already been banned'], 400);
+
 
             if($request->input('action') == 'unban'){
                 $input = $request->all();
                 $user = User::find($input['userID']);
                 $user->unban();
-                return redirect('/admin')->with('message', "Profile was unbanned successfully");
+                return response()->json(['message' => 'Profile was unbanned successfully'], 200);
             }
+            else
+             return response()->json(['error' => 'User has already been unbanned'], 400);
         }
         else
-            return redirect('/dashboard')->with('message', 'You are not allowed to visit this page');
+            return response()->json(['error' => 'You are not allowed to view this page!'], 401);
     }
 
     private function checkIfUserAdmin() {

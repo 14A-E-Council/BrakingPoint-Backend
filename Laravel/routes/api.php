@@ -31,8 +31,36 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//Admin
+Route::controller(AdminController::class)->group(function (){
+    Route::get('/admin', 'showUsers');
+    Route::put('/admin', 'modifyOrDeleteUser');
+});
+
+//Facebook
+Route::controller(FacebookController::class)->group(function(){
+    Route::get('auth/facebook', 'redirectToFacebook')->name('auth.facebook');
+    Route::get('auth/facebook/callback', 'handleFacebookCallback');
+});
+
+//Google
+Route::controller(GoogleController::class)->group(function(){
+    Route::get('auth/google', 'redirectToGoogle')->name('auth.google');
+    Route::get('auth/google/callback', 'handleGoogleCallback');
+});
+
+//User
 Route::controller(UserController::class)->group(function () {
+    Route::get('/leaderboard', 'showUsers');
     Route::put('/editprofile/{id}', 'edit');
+});
+
+//Ban user
+Route::group(['middleware'=>'is-ban'], function(){
+
+    Route::post('userBan',[AdminController::class,'modifyOrDeleteUser'])->name('users.ban');
+    Route::get('userUserRevoke/{id}',[UserController::class,'modifyOrDeleteUser'])->name('users.revokeuser');
+
 });
 
 

@@ -37,7 +37,7 @@ class GoogleController extends Controller
 
                 Auth::login($finduser);
 
-                return redirect()->intended('dashboard');
+                return response()->json(['message' => 'Login successful'], 200);
 
             }else{
                 $newUser = User::updateOrCreate(['email' => $user->email],[
@@ -48,11 +48,12 @@ class GoogleController extends Controller
 
                 Auth::login($newUser);
 
-                return redirect()->intended('dashboard');
+                return response()->json(['message' => 'Registration successful'], 200);
             }
 
         } catch (Exception $e) {
             dd($e->getMessage());
+            return response()->json(['error' => $e], 400);
         }
     }
 }
