@@ -21,7 +21,7 @@ return [
         'register',
         'logout',
         'sanctum/csrf-cookie',
-        'editprofile',
+        'editprofile/*',
         ],
 
     'allowed_methods' => ['*'],
@@ -32,7 +32,7 @@ return [
 
     'allowed_headers' => ['*'],
 
-    'exposed_headers' => [],
+    'exposed_headers' => ['*'],
 
     'max_age' => 0,
 

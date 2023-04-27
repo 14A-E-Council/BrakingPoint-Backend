@@ -40,10 +40,11 @@ class UserController extends Controller
         }
 
     public function edit(UserRequest $request, $id) {
-            $data = $request->validated();
+            $user = Auth::user();
+            $data = $request;//->validated();
             // TODO
             // $id = Auth::id();
-            $fields = ['username','first_name','last_name','email','profile_picture'];
+            $fields = ['username','first_name','last_name','email','profile_picture','preferred_category'];
 
             if (User::where('userID', $id)->get('username') != $data['username'] &&
                 User::where('username', '=', $data['username'])
@@ -52,7 +53,6 @@ class UserController extends Controller
                 return response()->json(['error' => 'Username has already been taken!'], 409);
             }
 
-
             if (User::where('userID', $id)->get('email') != $data['email'] &&
                 User::where('email', '=', $data['email'])
                     ->where('userID','!=', $id)
@@ -60,15 +60,11 @@ class UserController extends Controller
                 return response()->json(['error' => 'Email has already been taken!'], 409);
             }
 
-
-
-
-
             if($request->hasFile('profile_picture')) {
                 $user = Auth::user();
-                $profile_picture = $request->file('profile_picture');
+                $profile_picture = $request->profile_picture;
                 $filename = $user->username . '.' . $profile_picture->getClientOriginalExtension();
-                Image::make($profile_picture)->resize(300, 300)->save(public_path('/uploads/profile_pictures/' .  $filename ));
+                Image::make($profile_picture)->resize(300, 300)->save(public_path('/uploads/profile_pictures/' .  '.png' ));
 
                 $user->profile_picture = $filename;
                 $user->save();

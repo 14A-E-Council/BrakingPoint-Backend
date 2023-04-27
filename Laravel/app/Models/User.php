@@ -33,6 +33,7 @@ class User extends Authenticatable implements MustVerifyEmail, BannableInterface
         'admin',
         'google_id',
         'facebook_id',
+        'preferred_category',
     ];
 
     /**
