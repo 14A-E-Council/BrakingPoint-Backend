@@ -20,7 +20,7 @@ return new class extends Migration
             $table->double('odds');
             $table->string('status');
             $table->unsignedBigInteger('sportID');
-            $table->foreign('sportID')->references('sportID')->on('sports');
+            //$table->foreign('sportID')->references('sportID')->on('sports');
         });
     }
 

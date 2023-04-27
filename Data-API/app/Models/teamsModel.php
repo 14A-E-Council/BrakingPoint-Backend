@@ -11,13 +11,14 @@ class teamsModel extends Model
     protected $table = 'teams';
     protected $primaryKey = 'teamID';
     public $incrementing = 'false';
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = [
         'constructorUrl',
         'url',
         'name',
-        'nationality',
+        //'teamurl',
+        //'nationality',
         'description'
     ];
 }

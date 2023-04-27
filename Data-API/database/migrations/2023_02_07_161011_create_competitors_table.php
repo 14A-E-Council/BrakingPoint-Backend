@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('competitors', function (Blueprint $table) {
             $table->id('competitorID');
-            $table->string('driverUrl');
+            // $table->string('driverUrl')->nullable;
             $table->string('name');
             $table->longText('description');
-            $table->integer('permanentNumber');
-            $table->string('nationality');
-            $table->date('dateOfBirth');
-            $table->float('points');
+            // $table->integer('permanentNumber')->nullable;
+            // $table->string('nationality');
+            // $table->date('dateOfBirth');
+            // $table->float('points');
             $table->foreignId('teamID')->references('teamID')->on('teams');
-            $table->timestamps(true);
+            $table->timestamps(false);
         });
     }
 

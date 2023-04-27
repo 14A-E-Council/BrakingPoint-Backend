@@ -10,13 +10,13 @@ class competitorsModel extends Model
     use HasFactory;
     protected $table = 'competitors';
     protected $primaryKey = 'competitorID';
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = [
-        'driverUrl',
-        'permanentNumber',
-        'dateOfBirth',
-        'nationality',
+        //'driverUrl',
+        //'permanentNumber',
+        //'dateOfBirth',
+        //'nationality',
         'name',
         'description',
         'teamID'

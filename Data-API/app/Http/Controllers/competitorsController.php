@@ -25,16 +25,16 @@ class competitorsController extends Controller
             $url = 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&continue=&format=json&formatversion=2';
             $description = $this->getDataFrom($url . '&titles=' . substr($value->Constructor->url, 29))->query->pages[0]->extract;
             $removeFromDescription = Str::between($description, '(',')');
-            $removeUnfinishedSentenceDesc = Str::afterLast($description, '.');          
-            $description = Str::remove($removeFromDescription, $description);           
-            $description = Str::remove($removeUnfinishedSentenceDesc, $description);            
+            $removeUnfinishedSentenceDesc = Str::afterLast($description, '.');
+            $description = Str::remove($removeFromDescription, $description);
+            $description = Str::remove($removeUnfinishedSentenceDesc, $description);
             $description = Str::remove('()', $description);
             $cleanDescription = Str::squish($description);
 
             teamsModel::updateOrCreate(
                 [
                     'name' => $value->Constructor->name,
-                    'constructorUrl' => $value->Constructor->constructorId,
+                    //'constructorUrl' => $value->Constructor->constructorId,
                     'description' => $cleanDescription == "" ? "No description was found." : $cleanDescription
                 ]
             );
@@ -63,24 +63,17 @@ class competitorsController extends Controller
             // Csapat név definiálása
             $teamName = $value->Constructor->name;
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
             competitorsModel::updateOrCreate(
                 [
                     'name' => $fullName,
-                    'driverUrl' => $value->Driver->driverId,
+                    //'driverUrl' => $value->Driver->driverId,
                     'description' => $cleanDescription == "" ? "No description was found." : $cleanDescription,
                     'teamID' => teamsModel::where('name', 'LIKE', $teamName)->get()[0]->teamID
                 ]
             );
         }
-        foreach ($competitorsInfo as $key => $value) {
+        /*foreach ($competitorsInfo as $key => $value) {
 
-<<<<<<< Updated upstream
-            
-=======
 
             competitorsModel::updateOrCreate(
                 [
@@ -89,7 +82,6 @@ class competitorsController extends Controller
                     'nationality' =>
                 ]
             );
->>>>>>> Stashed changes
-        }
+        }*/
     }
 }
