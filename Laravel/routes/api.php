@@ -17,6 +17,7 @@ use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\competitorsController;
 use App\Http\Controllers\raceResultsController;
+use App\Http\Controllers\currentStandingsController;
 use Illuminate\Support\Facades\Facade\Http;
 
 
@@ -69,7 +70,7 @@ Route::group(['middleware'=>'is-ban'], function(){
 
 //Teams/Competitors
 Route::get('/storecompetitors', [competitorsController::class, 'storeCompetitors']);
-Route::get('/updatecompetitors', [competitorsController::class, 'updateCompetitors']);
+Route::get('/storecurrentstandings', [currentStandingsController::class, 'storeCurrentStandings']);
 Route::get('/storelastrace', [raceResultsController::class, 'storeLastRace']);
 
 
