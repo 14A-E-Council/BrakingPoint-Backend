@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('name');
             $table->longText('description');
             $table->string('teamUrl');
-            $table->integer('position');
             $table->string('nationality');
-            $table->float('points');
-            $table->foreignId('sportID')->references('sportID')->on('sports');
-            $table->timestamps(true);
+            $table->float('points')->nullable();
+            $table->integer('position')->nullable();
+            // $table->foreignId('sportID')->references('sportID')->on('sports');
+            $table->timestamps(false);
         });
     }
 

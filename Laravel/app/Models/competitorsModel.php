@@ -10,7 +10,7 @@ class competitorsModel extends Model
     use HasFactory;
     protected $table = 'competitors';
     protected $primaryKey = 'competitorID';
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = [
         'driverUrl',

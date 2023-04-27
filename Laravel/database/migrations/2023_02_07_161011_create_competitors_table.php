@@ -21,9 +21,10 @@ return new class extends Migration
             $table->integer('permanentNumber');
             $table->string('nationality');
             $table->date('dateOfBirth');
-            $table->float('points');
+            $table->float('points')->nullable();
+            $table->integer('position')->nullable();
             $table->foreignId('teamID')->references('teamID')->on('teams');
-            $table->timestamps(true);
+            $table->timestamps(false);
         });
     }
 
