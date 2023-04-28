@@ -20,6 +20,8 @@ use App\Http\Controllers\raceResultsController;
 use App\Http\Controllers\currentStandingsController;
 use Illuminate\Support\Facades\Facade\Http;
 
+use App\Http\Controllers\BetController;
+use App\Http\Controllers\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,7 +75,9 @@ Route::get('/storecompetitors', [competitorsController::class, 'storeCompetitors
 Route::get('/storecurrentstandings', [currentStandingsController::class, 'storeCurrentStandings']);
 Route::get('/storelastrace', [raceResultsController::class, 'storeLastRace']);
 
+Route::get('/bets/{id}', [BetController::class, 'show']);
+Route::resource('bets', BetController::class)->except(['create', 'edit', 'show']);
 
 
-
-
+Route::get('/tickets/{id}', [TicketController::class, 'show']);
+Route::resource('tickets', TicketController::class)->except(['create', 'edit', 'show']);
