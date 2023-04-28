@@ -16,7 +16,7 @@ class BetsTest extends TestCase
     
         $response->assertStatus(200);
         $response->assertJsonStructure([
-            '*' => ['date', 'category', 'odds', 'status', 'sportID', 'title', 'odds2', 'available_betID',],
+            '*' => ['date', 'category', 'odds', 'status', 'title', 'odds2', 'id'],
         ]);
 
     }
@@ -28,7 +28,6 @@ class BetsTest extends TestCase
             'category' => 'race',
             'odds' => 1,
             'status' => 'ongoing',
-            'sportID' => 1,
             'title' => 'Test',
             'odds2' => 1
         ];
@@ -46,24 +45,22 @@ class BetsTest extends TestCase
             'category' => 'race',
             'odds' => 1,
             'status' => 'ongoing',
-            'sportID' => 1,
             'title' => 'Test',
             'odds2' => 1
         ]);
         $bet->save();
-        $response = $this->get('/api/bets/' . $bet->available_betID);
+        $response = $this->get('/api/bets/' . $bet->id);
         $response->assertStatus(200);
         $response->assertJson([
             'date' => $bet->date,
             'category' => $bet->category,
             'odds' => $bet->odds,
             'status' => $bet->status,
-            'sportID' => $bet->sportID,
             'title' => $bet->title,
             'odds2' => $bet->odds2,
 
         ]);
-        $response = $this->delete('/api/bets/' . $bet->available_betID);
+        $response = $this->delete('/api/bets/' . $bet->id);
 
     }
     public function testPatchbet()
@@ -74,7 +71,6 @@ class BetsTest extends TestCase
             'category' => 'race',
             'odds' => 1,
             'status' => 'ongoing',
-            'sportID' => 1,
             'title' => 'Test',
             'odds2' => 1
         ]);
@@ -83,12 +79,12 @@ class BetsTest extends TestCase
             'odds2' => 5,
         ];
         $bet->save();
-        $response = $this->patch('/api/bets/' . $bet->available_betID, $data);
+        $response = $this->patch('/api/bets/' . $bet->id, $data);
 
 
         $response->assertStatus(200);
-        $this->assertDatabaseHas('available_bets', array_merge(['available_betID' => $bet->available_betID], $data));
-        $response = $this->delete('/api/bets/' . $bet->available_betID);
+        $this->assertDatabaseHas('available_bets', array_merge(['id' => $bet->id], $data));
+        $response = $this->delete('/api/bets/' . $bet->id);
     }
     public function testDeletebet()
     {
@@ -98,16 +94,15 @@ class BetsTest extends TestCase
             'category' => 'race',
             'odds' => 1,
             'status' => 'ongoing',
-            'sportID' => 1,
             'title' => 'Test',
             'odds2' => 1
         ]);
         $bet->save();
-        $response = $this->delete('/api/bets/' . $bet->available_betID);
+        $response = $this->delete('/api/bets/' . $bet->id);
 
 
         $response->assertStatus(204);
-        $this->assertDatabaseMissing('available_bets', ['available_betID' => $bet->available_betID]);
+        $this->assertDatabaseMissing('available_bets', ['id' => $bet->id]);
 
     }
 }

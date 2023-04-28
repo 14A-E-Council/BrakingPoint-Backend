@@ -26,7 +26,7 @@ class TicketController extends Controller
         $validator = Validator::make($request->all(),[
             'status' => 'required|min:1|max:255',
             'debt' => 'required|numeric',
-            'sum_odds' => 'required|numeric',
+            'odds' => 'required|numeric',
             'races' => 'required|min:1|max:255',
             'payment_date' => 'date',
             'betID' => 'required|numeric',

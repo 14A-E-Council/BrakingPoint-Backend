@@ -13,7 +13,7 @@ class TicketsTest extends TestCase
     
         $response->assertStatus(200);
         $response->assertJsonStructure([
-            '*' => ['ticketID', 'status', 'debt', 'sum_odds', 'races', 'payment_date', 'userID', 'betID',],
+            '*' => ['ticketID', 'status', 'debt', 'odds', 'races', 'userID', 'betID',],
         ]);
 
     }
@@ -23,9 +23,8 @@ class TicketsTest extends TestCase
         $data = [
             'status' => 'ongoing',
             'debt' => 100,
-            'sum_odds' => 1,
+            'odds' => 1,
             'races' => 'versus',
-            'payment_date' => '2023-04-29',
             'userID' => '1',
             'betID' => '1'
         ];
@@ -41,9 +40,8 @@ class TicketsTest extends TestCase
         $ticket = new Ticket([
             'status' => 'ongoing',
             'debt' => 100,
-            'sum_odds' => 2,
+            'odds' => 2,
             'races' => 'versus',
-            'payment_date' => '2023-04-29',
             'userID' => '1',
             'betID' => '3'
         ]);
@@ -54,9 +52,8 @@ class TicketsTest extends TestCase
             'ticketID' => $ticket->ticketID,
             'status' => $ticket->status,
             'debt' => $ticket->debt,
-            'sum_odds' => $ticket->sum_odds,
+            'odds' => $ticket->odds,
             'races' => $ticket->races,
-            'payment_date' => $ticket->payment_date,
             'userID' => $ticket->userID,
             'betID' => $ticket->betID
         ]);
@@ -69,14 +66,13 @@ class TicketsTest extends TestCase
         $ticket = new Ticket([
             'status' => 'ongoing',
             'debt' => 100,
-            'sum_odds' => 3,
+            'odds' => 3,
             'races' => 'versus',
-            'payment_date' => '2023-04-29',
             'userID' => '1',
             'betID' => '1'
         ]);
         $data= [
-            'sum_odds' => 1.3,
+            'odds' => 1.3,
             'debt' => 50,
         ];
         $ticket->save();
@@ -93,9 +89,8 @@ class TicketsTest extends TestCase
         $ticket = new Ticket([
             'status' => 'ongoing',
             'debt' => 100,
-            'sum_odds' => 3,
+            'odds' => 3,
             'races' => 'versus',
-            'payment_date' => '2023-04-29',
             'userID' => '1',
             'betID' => '1'
         ]);

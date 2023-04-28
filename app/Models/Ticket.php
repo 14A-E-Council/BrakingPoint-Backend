@@ -15,7 +15,7 @@ class Ticket extends Model
     protected $fillable = [
         'status', 
         'debt', 
-        'sum_odds', 
+        'odds', 
         'races', 
         'payment_date', 
         'betID', // <-

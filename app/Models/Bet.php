@@ -16,7 +16,6 @@ class Bet extends Model
         'category', 
         'odds', 
         'odds2',//<-
-        'status', 
-        'sportID'];
-    protected $primaryKey = 'available_betID';
+        'status', ];
+    protected $primaryKey = 'id';
 }
