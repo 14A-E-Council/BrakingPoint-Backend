@@ -1,6 +1,7 @@
 @echo off
-title Start BrakingPoint Database
-echo php artisan serve
-pause
-echo npm run dev
+title Run BrakingPoint Server
+rem Starting server
+echo Starting server
+start cmd /k php artisan serve
+start cmd /k npm run dev
 pause

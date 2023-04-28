@@ -1,6 +1,10 @@
 @echo off
 title Migrate BrakingPoint Database
-echo npm i
+rem Installing node packages
+echo Installing node packages
+start cmd /k npm i
 pause
-echo php artisan migrate 
+rem Migrating database
+echo Migrating database
+start cmd /k php artisan migrate
 pause
