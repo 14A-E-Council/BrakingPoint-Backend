@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->string('status');
-            $table->int('debt');
-            $table->int('odds');
+            $table->integer('debt');
+            $table->float('odds');
             $table->string('races');
             $table->foreignId('userID')->references('userID')->on('users');
-            $table->foreignId('betID')->references('betID')->on('available_bets');
+            $table->foreignId('betID')->references('id')->on('available_bets');
             $table->timestamps(false);
         });
     }

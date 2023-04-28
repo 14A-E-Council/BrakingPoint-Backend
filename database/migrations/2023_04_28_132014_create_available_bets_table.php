@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('category');
             $table->date('date');
-            $table->int('odds');
-            $table->int('odds2');
+            $table->float('odds');
+            $table->float('odds2')->nullable();
             $table->string('status');
             $table->timestamps(false);
         });
