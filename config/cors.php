@@ -22,6 +22,8 @@ return [
         'logout',
         'sanctum/csrf-cookie',
         'editprofile/*',
+        'auth/facebook',
+        'auth/facebook/callback',
         ],
 
     'allowed_methods' => ['*'],

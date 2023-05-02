@@ -17,7 +17,7 @@ class FacebookController extends Controller
      */
     public function redirectToFacebook()
     {
-        return Socialite::driver('facebook')->redirect();
+        return Socialite::driver('facebook')->redirect()->getTargetUrl();
     }
 
     /**
@@ -37,7 +37,8 @@ class FacebookController extends Controller
 
                 Auth::login($finduser);
 
-                return response()->json(['message' => 'Login successful'], 200);
+                //return response()->json('Belépés sikeres! Kérjük zárja be ezt az oldalt!', 200);
+                return redirect()->away("http://localhost:8080");
 
             }else{
                 $newUser = User::updateOrCreate(['email' => $user->email],[
@@ -49,7 +50,7 @@ class FacebookController extends Controller
                 Auth::login($newUser);
 
                 //return redirect()->intended('dashboard');
-                return response()->json(['message' => 'Registration successful'], 200);
+                return redirect()->away("http://localhost:8080");
             }
 
         } catch (Exception $e) {
