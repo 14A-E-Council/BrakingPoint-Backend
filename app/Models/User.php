@@ -35,6 +35,8 @@ class User extends Authenticatable implements MustVerifyEmail, BannableInterface
         'facebook_id',
         'preferred_category',
         'colour_palette',
+        'level',
+        'balance',
     ];
 
     /**

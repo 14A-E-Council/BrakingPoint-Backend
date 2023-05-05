@@ -24,6 +24,7 @@ return [
         'editprofile/*',
         'auth/facebook',
         'auth/facebook/callback',
+        'email/verification-notification'
         ],
 
     'allowed_methods' => ['*'],
