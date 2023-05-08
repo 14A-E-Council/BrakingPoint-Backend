@@ -137,8 +137,3 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-//Teams/Competitors
-Route::get('/storecompetitors', [competitorsController::class, 'storeCompetitors']);
-Route::get('/updatecompetitors', [competitorsController::class, 'updateCompetitors']);
-Route::get('/storelastrace', [raceResultsController::class, 'storeLastRace']);
-

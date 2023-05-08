@@ -75,9 +75,10 @@ Route::get('/storecompetitors', [competitorsController::class, 'storeCompetitors
 Route::get('/storecurrentstandings', [currentStandingsController::class, 'storeCurrentStandings']);
 Route::get('/storelastrace', [raceResultsController::class, 'storeLastRace']);
 
+//Bets
 Route::get('/bets/{id}', [BetController::class, 'show']);
 Route::resource('bets', BetController::class)->except(['create', 'edit', 'show']);
 
-
+//Tickets
 Route::get('/tickets/{id}', [TicketController::class, 'show']);
 Route::resource('tickets', TicketController::class)->except(['create', 'edit', 'show']);
