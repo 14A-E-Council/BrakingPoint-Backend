@@ -11,15 +11,9 @@ use Illuminate\Support\Str;
 
 class raceResultsController extends Controller
 {
-    public function getDataFrom($url)
+    public static function storeRaceScores()
     {
-        $response = Http::get($url);
-
-        return json_decode($response->body());
-    }
-    public function storeRaceScores()
-    {
-        $lastRaceResults = $this->getDataFrom('http://ergast.com/api/f1/current/last/results.json')->MRData->RaceTable->Races[0];
+        $lastRaceResults = competitorsController::getDataFrom('http://ergast.com/api/f1/current/last/results.json')->MRData->RaceTable->Races[0];
 
         // A legutóbbi forduló adatainak a feltöltése adatbázisba versenyzőnként
         foreach ($lastRaceResults->Results as $key => $value) {

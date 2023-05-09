@@ -15,6 +15,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('RaceResultUpdate')
+            ->weekly();
         // $schedule->command('inspire')->hourly();
     }
 

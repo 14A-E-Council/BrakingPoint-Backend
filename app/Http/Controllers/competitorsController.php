@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class competitorsController extends Controller
 {
-    public function getDataFrom($url)
+    public static function getDataFrom($url)
     {
         $response = Http::get($url);
 

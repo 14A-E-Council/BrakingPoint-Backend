@@ -2,8 +2,7 @@
 
 namespace App\Http;
 
-use App\Http\Controllers\raceResultsController;
-use Illuminate\Console\Scheduling\Schedule;
+
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -15,12 +14,7 @@ class Kernel extends HttpKernel
      *
      * @var array<int, class-string|string>
      */
-    protected function schedule(Schedule $schedule): void
-    {
-        $schedule->call(function () {
-            raceResultsController::class('storeRaceScores');
-        })->weekly();
-    }
+
     protected $middleware = [
         \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
