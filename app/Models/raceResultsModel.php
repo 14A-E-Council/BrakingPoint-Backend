@@ -10,14 +10,15 @@ class raceResultsModel extends Model
     use HasFactory;
     protected $table = 'raceResults';
     protected $primaryKey = 'raceResultsID';
+    public $timestamps = false;
 
     protected $fillable = [
         'raceName',
         'position',
         'points',
         'fastestLap',
-        'time',
         'laps',
+        'date',
         'competitorID'
     ];
 }

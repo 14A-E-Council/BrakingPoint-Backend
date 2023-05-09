@@ -73,6 +73,7 @@ Route::group(['middleware'=>'is-ban'], function(){
 //Teams/Competitors
 Route::get('/storecompetitors', [competitorsController::class, 'storeCompetitors']);
 Route::get('/storecurrentstandings', [currentStandingsController::class, 'storeCurrentStandings']);
+Route::get('/storeracescores', [raceResultsController::class, 'storeRaceScores']);
 Route::get('/storelastrace', [raceResultsController::class, 'storeLastRace']);
 
 //Bets

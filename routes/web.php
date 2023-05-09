@@ -14,8 +14,6 @@ use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FacebookController;
 
-use App\Http\Controllers\competitorsController;
-use App\Http\Controllers\raceResultsController;
 use Illuminate\Support\Facades\Facade\Http;
 
 /*

@@ -18,10 +18,11 @@ return new class extends Migration
             $table->string('raceName');
             $table->integer('position');
             $table->float('points');
-            $table->integer('fastestLap');
-            $table->string('time');
+            $table->string('fastestLap');
             $table->integer('laps');
+            $table->date('date');
             $table->foreignId('competitorID')->references('competitorID')->on('competitors');
+            $table->timestamps(false);
 
         });
     }
