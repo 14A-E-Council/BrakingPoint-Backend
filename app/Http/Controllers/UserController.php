@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserPasswordRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Image;
@@ -39,12 +40,21 @@ class UserController extends Controller
             return response()->json($users);
         }
 
+    public function editPassword(UserPasswordRequest $request, $id ) {
+        $user = Auth::user();
+        $data = $request;
+        $fields = ['password'];
+        $password = Hash::make($data['password']);
+        $user->password = $password;
+        $user->save();
+    }
+
     public function edit(UserRequest $request, $id) {
             $user = Auth::user();
             $data = $request;//->validated();
-            // TODO
             // $id = Auth::id();
-            $fields = ['username','first_name','last_name','email','profile_picture','preferred_category','colour_palette',];
+            // $password = Hash::make($data['password']);
+            $fields = ['username','first_name','last_name','email','profile_picture','preferred_category','colour_palette'];
 
             if (User::where('userID', $id)->get('username') != $data['username'] &&
                 User::where('username', '=', $data['username'])
@@ -77,6 +87,12 @@ class UserController extends Controller
                 User::where('userID',$id)->update([$value => $data[$value]]);
 
             }
+            // if (isset($password)) {
+            //     $user->password = $user->password;
+            // }
+            // else {
+            //     $user->password = $password;
+            // }
             $user->save();
             return response()->json([
                 'message' => 'Profile updated successfully',

@@ -60,6 +60,7 @@ Route::controller(GoogleController::class)->group(function(){
 Route::controller(UserController::class)->group(function () {
     Route::get('/leaderboard', 'showUsers');
     Route::put('/editprofile/{id}', 'edit');
+    Route::put('/editpassword/{id}', 'editPassword');
 });
 
 //Ban user
