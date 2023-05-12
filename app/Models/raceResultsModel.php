@@ -9,7 +9,7 @@ class raceResultsModel extends Model
 {
     use HasFactory;
     protected $table = 'raceResults';
-    protected $primaryKey = 'raceResultsID';
+    protected $primaryKey = 'raceResultID';
     public $timestamps = false;
 
     protected $fillable = [
@@ -19,6 +19,7 @@ class raceResultsModel extends Model
         'fastestLap',
         'laps',
         'date',
-        'competitorID'
+        'competitorID',
+        'circuitID'
     ];
 }

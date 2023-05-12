@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\competitorsModel;
 use App\Models\raceResultsModel;
+use App\Models\racesModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -26,7 +27,8 @@ class raceResultsController extends Controller
                     'fastestLap' => $value->FastestLap->Time->time,
                     'laps' => $value->laps,
                     'date' => $lastRaceResults->date,
-                    'competitorID' => competitorsModel::where('driverUrl', 'LIKE', $value->Driver->driverId)->get()[0]->competitorID
+                    'competitorID' => competitorsModel::where('driverUrl', 'LIKE', $value->Driver->driverId)->get()[0]->competitorID,
+                    'circuitID' => racesModel::where('circuitUrl', 'LIKE', $lastRaceResults->Circuit->circuitId)->get()[0]->raceID
                 ]
             );
         }

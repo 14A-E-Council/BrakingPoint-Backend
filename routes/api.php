@@ -18,6 +18,8 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\competitorsController;
 use App\Http\Controllers\raceResultsController;
 use App\Http\Controllers\currentStandingsController;
+use App\Http\Controllers\racesController;
+
 use Illuminate\Support\Facades\Facade\Http;
 
 use App\Http\Controllers\BetController;
@@ -76,6 +78,7 @@ Route::get('/storecompetitors', [competitorsController::class, 'storeCompetitors
 Route::get('/storecurrentstandings', [currentStandingsController::class, 'storeCurrentStandings']);
 Route::get('/storeracescores', [raceResultsController::class, 'storeRaceScores']);
 Route::get('/storelastrace', [raceResultsController::class, 'storeLastRace']);
+Route::get('/storecurrentseasonraces', [racesController::class, 'storeRaces']);
 
 //Bets
 Route::get('/bets/{id}', [BetController::class, 'show']);

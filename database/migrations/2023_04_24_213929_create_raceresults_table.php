@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('laps');
             $table->date('date');
             $table->foreignId('competitorID')->references('competitorID')->on('competitors');
+            $table->foreignId('circuitID')->references('raceID')->on('races');
             $table->timestamps(false);
 
         });
