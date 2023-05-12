@@ -51,9 +51,7 @@ class UserController extends Controller
 
     public function edit(UserRequest $request, $id) {
             $user = Auth::user();
-            $data = $request;//->validated();
-            // $id = Auth::id();
-            // $password = Hash::make($data['password']);
+            $data = $request;
             $fields = ['username','first_name','last_name','email','profile_picture','preferred_category','colour_palette'];
 
             if (User::where('userID', $id)->get('username') != $data['username'] &&
@@ -87,12 +85,6 @@ class UserController extends Controller
                 User::where('userID',$id)->update([$value => $data[$value]]);
 
             }
-            // if (isset($password)) {
-            //     $user->password = $user->password;
-            // }
-            // else {
-            //     $user->password = $password;
-            // }
             $user->save();
             return response()->json([
                 'message' => 'Profile updated successfully',
