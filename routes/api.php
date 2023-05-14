@@ -62,16 +62,21 @@ Route::group(['middleware'=>'is-ban'], function(){
 
 });
 
-//Teams/Competitors
+//Teams/Competitors külső forrásból való lekérése
 Route::get('/storecompetitors', [competitorsController::class, 'storeCompetitors']);
 Route::get('/storecurrentstandings', [currentStandingsController::class, 'storeCurrentStandings']);
 Route::get('/storeracescores', [raceResultsController::class, 'storeRaceScores']);
 Route::get('/storelastrace', [raceResultsController::class, 'storeLastRace']);
 Route::get('/storecurrentseasonraces', [racesController::class, 'storeRaces']);
 
+//Adat továbbítása az oldalra
 Route::get('/shownextrace', [racesController::class, 'showNextRace']);
 Route::get('/gettopcompetitors', [competitorsController::class, 'getTopCompetitors']);
 Route::get('/getlastracetopcompetitors', [raceResultsController::class, 'getLastRaceTopCompetitors']);
+Route::get('/showallteams', [competitorsController::class, 'showAllTeams']);
+Route::get('/getteambyteamurl/{teamUrl}', [competitorsController::class, 'getTeamByTeamUrl']);
+Route::get('/getdriverbyteamid/{teamID}', [competitorsController::class, 'getDriverByTeamID']);
+
 //Bets
 Route::get('/bets/{id}', [BetController::class, 'show']);
 Route::resource('bets', BetController::class)->except(['create', 'edit', 'show']);

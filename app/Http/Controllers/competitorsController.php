@@ -80,4 +80,18 @@ class competitorsController extends Controller
     {
         return DB::table('competitors')->orderBy('position')->limit(5)->get();
     }
+
+    public function showAllTeams()
+    {
+        return DB::table('teams')->get();
+    }
+
+    public function getTeamByTeamUrl($teamUrl)
+    {
+        return DB::table('teams')->where('teamUrl', 'LIKE', $teamUrl)->get()[0];
+    }
+    public function getDriverByTeamID($teamID)
+    {
+        return DB::table('competitors')->where('teamID', 'LIKE', $teamID)->get();
+    }
 }
