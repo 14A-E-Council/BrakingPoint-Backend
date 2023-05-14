@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\racesModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Nette\Utils\DateTime;
 
 class racesController extends Controller
 {
@@ -24,5 +26,9 @@ class racesController extends Controller
                 ]
             );
         }
+    }
+    public static function showNextRace()
+    {
+        return DB::table('races')->where('date','>', new DateTime("now"))->orderBy('date')->limit(1)->get()[0];
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('raceresults', function (Blueprint $table) {
             $table->id('raceResultID');
             $table->string('raceName');
+            $table->string('name');
             $table->integer('position');
             $table->float('points');
             $table->string('fastestLap');

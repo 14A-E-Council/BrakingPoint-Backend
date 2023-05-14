@@ -69,6 +69,9 @@ Route::get('/storeracescores', [raceResultsController::class, 'storeRaceScores']
 Route::get('/storelastrace', [raceResultsController::class, 'storeLastRace']);
 Route::get('/storecurrentseasonraces', [racesController::class, 'storeRaces']);
 
+Route::get('/shownextrace', [racesController::class, 'showNextRace']);
+Route::get('/gettopcompetitors', [competitorsController::class, 'getTopCompetitors']);
+Route::get('/getlastracetopcompetitors', [raceResultsController::class, 'getLastRaceTopCompetitors']);
 //Bets
 Route::get('/bets/{id}', [BetController::class, 'show']);
 Route::resource('bets', BetController::class)->except(['create', 'edit', 'show']);

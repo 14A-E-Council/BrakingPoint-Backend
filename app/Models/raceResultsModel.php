@@ -14,6 +14,7 @@ class raceResultsModel extends Model
 
     protected $fillable = [
         'raceName',
+        'name',
         'position',
         'points',
         'fastestLap',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\competitorsModel;
 use App\Models\teamsModel;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -74,5 +75,9 @@ class competitorsController extends Controller
                 ]
             );
         }
+    }
+    public function getTopCompetitors()
+    {
+        return DB::table('competitors')->orderBy('position')->limit(5)->get();
     }
 }

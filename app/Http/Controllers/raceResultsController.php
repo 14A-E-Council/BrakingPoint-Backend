@@ -7,6 +7,7 @@ use App\Models\competitorsModel;
 use App\Models\raceResultsModel;
 use App\Models\racesModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -22,6 +23,7 @@ class raceResultsController extends Controller
             raceResultsModel::updateOrCreate(
                 [
                     'raceName' => $lastRaceResults->raceName,
+                    'name' => $value->Driver->givenName . " " . $value->Driver->familyName,
                     'position' => $value->position,
                     'points' => $value->points,
                     'fastestLap' => $value->FastestLap->Time->time,
@@ -32,5 +34,9 @@ class raceResultsController extends Controller
                 ]
             );
         }
+    }
+    public static function getLastRaceTopCompetitors()
+    {
+        return DB::table('raceresults')->orderBy('position')->orderBy('date')->limit(5)->get();
     }
 }
