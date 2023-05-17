@@ -94,4 +94,12 @@ class competitorsController extends Controller
     {
         return DB::table('competitors')->where('teamID', 'LIKE', $teamID)->get();
     }
+    public function getDriverByDriverUrl($driverUrl)
+    {
+        return DB::table('competitors')->where('driverUrl', 'LIKE', $driverUrl)->get()[0];
+    }
+    public function getTeamByTeamID($teamID)
+    {
+        return DB::table('teams')->where('teamID', 'LIKE', $teamID)->get()[0];
+    }
 }

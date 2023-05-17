@@ -26,7 +26,7 @@ class RaceResultUpdate extends Command
      *
      * @return int
      */
-    public function handle()
+    public function RaceResultUpdate()
     {
         try {
             raceResultsController::storeRaceScores();

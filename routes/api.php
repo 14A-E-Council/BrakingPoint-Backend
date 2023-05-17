@@ -69,13 +69,21 @@ Route::get('/storeracescores', [raceResultsController::class, 'storeRaceScores']
 Route::get('/storelastrace', [raceResultsController::class, 'storeLastRace']);
 Route::get('/storecurrentseasonraces', [racesController::class, 'storeRaces']);
 
-//Adat továbbítása az oldalra
+//Főoldalhoz tartozó API kérések
 Route::get('/shownextrace', [racesController::class, 'showNextRace']);
 Route::get('/gettopcompetitors', [competitorsController::class, 'getTopCompetitors']);
 Route::get('/getlastracetopcompetitors', [raceResultsController::class, 'getLastRaceTopCompetitors']);
+
+//Csapat felsorolás oldalhoz tartozó kérés
 Route::get('/showallteams', [competitorsController::class, 'showAllTeams']);
+
+//Csapat oldalakhoz tartozó API kérések
 Route::get('/getteambyteamurl/{teamUrl}', [competitorsController::class, 'getTeamByTeamUrl']);
 Route::get('/getdriverbyteamid/{teamID}', [competitorsController::class, 'getDriverByTeamID']);
+
+//Vezető oldalakhoz tartozó API kérések
+Route::get('/getdriverbydriverurl/{driverUrl}', [competitorsController::class, 'getDriverByDriverUrl']);
+Route::get('/getteambyteamid/{teamID}', [competitorsController::class, 'getTeamByTeamID']);
 
 //Bets
 Route::get('/bets/{id}', [BetController::class, 'show']);
